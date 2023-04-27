@@ -1,7 +1,7 @@
 package edu.guilford;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
+//import java.util.Arrays;
 import java.util.Random;
 
 public class SortSearch {
@@ -9,9 +9,10 @@ public class SortSearch {
         // Define two constants MAX (number of elements in array)
         // and RANGE (range of values in array)
         final int MAX = 10000;
-        final int RANGE = 5000000;
+        final int RANGE = 50000;
         Random rand = new Random();
         DecimalFormat formatter = new DecimalFormat("0.00");
+        DecimalFormat smallFormatter = new DecimalFormat("0.0000");
 
         // Create an array of MAX integers with random assigned values in RANGE
         int[] array = new int[MAX];
@@ -25,7 +26,7 @@ public class SortSearch {
         SortAndSearch.selectionSort(array);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
-        System.out.printf("Selection sort took " + formatter.format(duration / 1.e6) + " milliseconds");
+        System.out.println("Selection sort took " + formatter.format(duration / 1.e6) + " milliseconds");
         // System.out.println("Sorted: " + Arrays.toString(array));
 
         // Shuffle the array for the next test
@@ -35,7 +36,29 @@ public class SortSearch {
         SortAndSearch.quickSort(array);
         endTime = System.nanoTime();
         duration = (endTime - startTime);
-        System.out.printf("\nQuick sort took " + formatter.format(duration / 1.e6) + " milliseconds");
+        System.out.println("Quick sort took " + formatter.format(duration / 1.e6) + " milliseconds");
+
+        shuffle(array);
+        // use linear search to find a random value in the array
+        int target = rand.nextInt(1, RANGE + 1);
+        startTime = System.nanoTime();
+        int index = SortAndSearch.linearSearch(array, target);
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println("Linear search took " + smallFormatter.format(duration / 1.e6) + " milliseconds");
+        System.out.println("Linear search found " + target + " at index " + index);
+    
+        // to use a binary search, the array must be sorted
+        // sort the array using quick sort
+        SortAndSearch.quickSort(array);
+        // We only have to do the sort once, and then we can do as many searches as we want
+        // use binary search to find a random value in the array
+        startTime = System.nanoTime();
+        index = SortAndSearch.binarySearch(array, target);
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println("Binary search took " + smallFormatter.format(duration / 1.e6) + " milliseconds");
+        System.out.println("Binary search found " + target + " at index " + index);
     }
 
     // Add a static method to shuffle the array

@@ -69,4 +69,51 @@ public class SortAndSearch {
         array[i] = array[j];
         array[j] = temp;
     }
+
+    // Add a linear or sequential search algorithm
+    public static int linearSearch(int[] array, int target) {
+        // Loop through the array
+        // We're going to go through each element one at a time and stop when we find what we're looking for
+        for (int i = 0; i < array.length; i++) {
+            // If the current element is equal to the target
+            if (array[i] == target) {
+                // Return the index of the current element
+                return i;
+            }
+        }
+        // Return -1 if the target is not found (we get to the end of the array and we can't find it)
+        return -1;
+    }
+
+    // Add a binary search algorithm
+    public static int binarySearch(int[] array, int target) {
+        // Set the low index to 0
+        int low = 0;
+        // Set the high index to the last element in the array
+        int high = array.length - 1;
+        // Loop through the array
+        while (low <= high) {
+            // Set the middle index to the middle of the array
+            int middle = (low + high) / 2;
+            // If the middle element is equal to the target
+            if (array[middle] == target) {
+                // Return the middle index
+                return middle;
+            }
+            // If the middle element is less than the target
+            if (array[middle] < target) {
+                // Set the low index to the middle index plus one
+                low = middle + 1;
+            }
+            // If the middle element is greater than the target
+            if (array[middle] > target) {
+                // Set the high index to the middle index minus one
+                high = middle - 1;
+            }
+        }
+        // Return -1 if the target is not found (we get to the end of the array and we can't find it)
+        return -1;
+    }
+    
+
 }
